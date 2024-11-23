@@ -16,22 +16,22 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            movement.y = 1; 
+            movement.y = 1;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            movement.y = -1; 
+            movement.y = -1;
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            movement.x = -1; 
+            movement.x = -1;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            movement.x = 1; 
+            movement.x = 1;
         }
 
-        
+
         transform.position += movement * speed * Time.deltaTime;
 
         if (movement.x != 0)

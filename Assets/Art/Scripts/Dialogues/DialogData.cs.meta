@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Art/Scripts/Dialogues/DialogData.cs.meta
 guid: 06a2c0a1860d0594294882076fa2545f
+========
+guid: c725caead91fd4d49982d259a181f6bd
+>>>>>>>> UjiCoba:Assets/Art/Scripts/NPC/FishSpawner.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
