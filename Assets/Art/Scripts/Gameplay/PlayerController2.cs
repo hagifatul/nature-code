@@ -11,10 +11,20 @@ public class PlayerController2 : MonoBehaviour
 
     [SerializeField] private Animator anime;
 
+    private GoldManager goldManager; // Referensi ke GoldManager
+    private Collider2D currentFishCollider; // Collider ikan yang berada dalam jangkauan
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 1;
+
+        // Cari GoldManager di scene
+        goldManager = FindObjectOfType<GoldManager>();
+        if (goldManager == null)
+        {
+            Debug.LogError("GoldManager tidak ditemukan di scene!");
+        }
     }
 
     void Update()
@@ -23,6 +33,11 @@ public class PlayerController2 : MonoBehaviour
         movement.y = Input.GetAxisRaw("Vertical");
 
         FlipAnimation();
+
+        if (Input.GetMouseButtonDown(0) && currentFishCollider != null)
+        {
+            CatchFish();
+        }
     }
 
     private void FixedUpdate()
@@ -75,4 +90,40 @@ public class PlayerController2 : MonoBehaviour
             anime.SetBool("SwimY", false);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Fish"))
+        {
+            currentFishCollider = collision; 
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Fish") && collision == currentFishCollider)
+        {
+            currentFishCollider = null;
+        }
+    }
+
+    private void CatchFish()
+    {
+        if (goldManager != null && currentFishCollider != null)
+        {
+            goldManager.ChangeGold(10); 
+
+            
+            Destroy(currentFishCollider.gameObject);
+
+            FishSpawner fishSpawner = FindObjectOfType<FishSpawner>();
+            if (fishSpawner != null)
+            {
+                fishSpawner.SpawnFish(); 
+            }
+
+            currentFishCollider = null;
+        }
+    }
+
 }
