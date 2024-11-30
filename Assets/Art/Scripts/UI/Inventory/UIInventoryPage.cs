@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
+using Unity.VisualScripting;
 using UnityEngine;
-//using UnityEngine.UI;
+using UnityEngine.WSA;
 
 public class UIInventoryPage : MonoBehaviour
 {
@@ -10,33 +12,31 @@ public class UIInventoryPage : MonoBehaviour
     private UIInventoryItem itemPrefab;
 
     [SerializeField]
-    private RectTransform contentPanel;
-
-    [SerializeField]
     private UIInventoryDescription itemDescription;
 
-    List<UIInventoryItem> listOfUIItems = new List<UIInventoryItem>();
+    [SerializeField]
+    private RectTransform contentPanel;
 
-    //tester
+    List<UIInventoryItem> ListOfUIItems = new List<UIInventoryItem>();
+
     public Sprite image;
     public int quantity;
     public string title, description;
-    //
+
     private void Awake()
     {
         Hide();
-        //mouseFollower.Toggle(false);
         itemDescription.ResetDescription();
     }
 
-    public void InitializeInventoryUI(int inventorysize)
+    public void InitializeInventoryUI(int inventorySize)
     {
-        for (int i = 0; i < inventorysize; i++)
+        for (int i = 0; i < inventorySize; i++)
         {
             UIInventoryItem uiItem =
                 Instantiate(itemPrefab, Vector3.zero, Quaternion.identity);
             uiItem.transform.SetParent(contentPanel);
-            listOfUIItems.Add(uiItem);
+            ListOfUIItems.Add(uiItem);
             uiItem.OnItemClicked += HandleItemSelection;
             uiItem.OnItemBeginDrag += HandleBeginDrag;
             uiItem.OnItemDroppedOn += HandleSwap;
@@ -47,29 +47,28 @@ public class UIInventoryPage : MonoBehaviour
 
     private void HandleShowItemActions(UIInventoryItem obj)
     {
-        
+
     }
 
     private void HandleEndDrag(UIInventoryItem obj)
     {
-        
+
     }
 
     private void HandleSwap(UIInventoryItem obj)
     {
-        
+
     }
 
     private void HandleBeginDrag(UIInventoryItem obj)
     {
-        
+
     }
 
     private void HandleItemSelection(UIInventoryItem obj)
     {
-        //Debug.Log(obj.name);
         itemDescription.SetDescription(image, title, description);
-        listOfUIItems[0].Select();
+        ListOfUIItems[0].Select();
     }
 
     public void Show()
@@ -77,9 +76,8 @@ public class UIInventoryPage : MonoBehaviour
         gameObject.SetActive(true);
         itemDescription.ResetDescription();
 
-        listOfUIItems[0].SetData(image, quantity);
+        ListOfUIItems[0].SetData(image, quantity);
     }
-
     public void Hide()
     {
         gameObject.SetActive(false);
